@@ -1,6 +1,6 @@
-# Day 1
+# ☀️ Day 1
 
-## Task 1
+## 🛠️ Task 1
 
 As the submarine drops below the surface of the ocean, it automatically performs a sonar sweep of the nearby sea floor. On a small screen, the sonar sweep report (your puzzle input) appears: each line is a measurement of the sea floor depth as the sweep looks further and further away from the submarine.
 
@@ -42,7 +42,11 @@ In this example, there are 7 measurements that are larger than the previous meas
 
 How many measurements are larger than the previous measurement?
 
-## Task 2
+### ❄️ Solution
+
+Iterate through the measurements with a two-element window, keep the ones where the second element is larger than the first, then return the count.
+
+## 🛠️ Task 2
 
 Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
 
@@ -81,3 +85,12 @@ H: 792 (increased)
 In this example, there are `5` sums that are larger than the previous sum.
 
 Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?
+
+### ❄️ Solution
+
+Two alternate solutions:
+
+1. Iterate through the list of measurements in a 4-element window, keep the ones where the sum of the first three numbers are smaller than the sum of the second three numbers, and return the count.
+2. Two step process:
+    1. Iterate through the list of measurements in a 3-element window, sum each of these and collect them into a new list
+    2. Iterate through the new list of summed values in a two-element window, keep the ones where the second is larger than the first, then return the count.
