@@ -11,11 +11,11 @@ fn main() {
     println!("Task 2: {}", task_2(&data));
 }
 
-fn task_1(data: &Vec<i32>) -> usize {
+fn task_1(data: &[i32]) -> usize {
     data.windows(2).filter(|v| v[1] > v[0]).count()
 }
 
-fn task_2(data: &Vec<i32>) -> usize {
+fn task_2(data: &[i32]) -> usize {
     data.windows(4)
         .filter(|v| v[1] + v[2] + v[3] > v[0] + v[1] + v[2])
         .count()
