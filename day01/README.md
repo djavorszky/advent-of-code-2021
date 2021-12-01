@@ -49,6 +49,7 @@ Iterate through the measurements with a two-element window, keep the ones where 
 #### 🚀 Performance
 ```
 task_1      time:   [6.6428 ns 6.6773 ns 6.7180 ns]
+task_1_fold time:   [6.5884 ns 6.6043 ns 6.6213 ns]
 ```
 
 ## 🛠️ Task 2
@@ -106,6 +107,6 @@ Interestingly there's a 8x slowdown in the alternative solution, probably due to
 
 ```
 task_2              time:   [10.418 ns 10.442 ns 10.474 ns]
+task_2_fold         time:   [6.4854 ns 6.5043 ns 6.5283 ns]
 task_2_alternative  time:   [80.741 ns 81.630 ns 82.606 ns]
-
 ```

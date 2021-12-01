@@ -2,10 +2,25 @@ pub fn task_1(data: &[i32]) -> usize {
     data.windows(2).filter(|v| v[1] > v[0]).count()
 }
 
+pub fn task_1_fold(data: &[i32]) -> usize {
+    data.windows(2)
+        .fold(0, |acc, v| if v[1] > v[0] { acc + 1 } else { acc })
+}
+
 pub fn task_2(data: &[i32]) -> usize {
     data.windows(4)
         .filter(|v| v[1] + v[2] + v[3] > v[0] + v[1] + v[2])
         .count()
+}
+
+pub fn task_2_fold(data: &[i32]) -> usize {
+    data.windows(4).fold(0, |acc, v| {
+        if v[1] + v[2] + v[3] > v[0] + v[1] + v[2] {
+            acc + 1
+        } else {
+            acc
+        }
+    })
 }
 
 pub fn task_2_alternative(data: &[i32]) -> usize {
@@ -29,10 +44,24 @@ mod tests {
     }
 
     #[test]
+    fn task_1_fold_passes() {
+        let data = vec![199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
+
+        assert_eq!(task_1_fold(&data), 7);
+    }
+
+    #[test]
     fn task_2_passes() {
         let data = vec![199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
 
         assert_eq!(task_2(&data), 5);
+    }
+
+    #[test]
+    fn task_2_fold_passes() {
+        let data = vec![199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
+
+        assert_eq!(task_2_fold(&data), 5);
     }
 
     #[test]
