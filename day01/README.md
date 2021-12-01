@@ -46,6 +46,11 @@ How many measurements are larger than the previous measurement?
 
 Iterate through the measurements with a two-element window, keep the ones where the second element is larger than the first, then return the count.
 
+#### 🚀 Performance
+```
+task_1      time:   [6.6428 ns 6.6773 ns 6.7180 ns]
+```
+
 ## 🛠️ Task 2
 
 Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
@@ -94,3 +99,13 @@ Two alternate solutions:
 2. Two step process:
     1. Iterate through the list of measurements in a 3-element window, sum each of these and collect them into a new list
     2. Iterate through the new list of summed values in a two-element window, keep the ones where the second is larger than the first, then return the count.
+
+#### 🚀 Performance
+
+Interestingly there's a 8x slowdown in the alternative solution, probably due to having to recreate the list from the summed values.
+
+```
+task_2              time:   [10.418 ns 10.442 ns 10.474 ns]
+task_2_alternative  time:   [80.741 ns 81.630 ns 82.606 ns]
+
+```
