@@ -49,6 +49,9 @@ Iterate over the instructions, then `fold` the vertical and horizontal values in
 
 ```
 day02 task_1   time:   [898.89 ns 905.25 ns 911.95 ns]
+Optimizing String split:
+day02 task_1   time:   [55.453 ns 55.650 ns 55.859 ns]
+               change: [-94.168% -94.053% -93.955%] (p = 0.00 < 0.05)
 ```
 
 ## 🛠️ Task 2
@@ -85,4 +88,7 @@ Same as task 1, but introduced a struct because having a three-element tuple was
 #### 🚀 Performance
 ```
 day02 task_2   time:   [915.88 ns 922.59 ns 929.99 ns]
+Optimizing String split:
+day02 task_2    time:   [62.587 ns 62.731 ns 62.880 ns]
+                change: [-93.354% -93.221% -93.097%] (p = 0.00 < 0.05)
 ```

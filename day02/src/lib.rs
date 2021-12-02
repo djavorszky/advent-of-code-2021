@@ -1,8 +1,8 @@
 pub fn task_1(input: &[&str]) -> i32 {
     let (v, h) = input
         .iter()
-        .map(|line| line.split_ascii_whitespace().collect())
-        .map(|parts: Vec<&str>| (parts[0], parts[1].parse::<i32>().unwrap()))
+        .map(|line| line.split_once(' ').unwrap())
+        .map(|parts| (parts.0, parts.1.parse::<i32>().unwrap()))
         .fold((0, 0), |acc, (instruction, amount)| match instruction {
             "forward" => (acc.0, acc.1 + amount),
             "up" => (acc.0 - amount, acc.1),
@@ -56,8 +56,8 @@ impl Position {
 pub fn task_2(input: &[&str]) -> i32 {
     let pos = input
         .iter()
-        .map(|line| line.split_ascii_whitespace().collect())
-        .map(|parts: Vec<&str>| (parts[0], parts[1].parse::<i32>().unwrap()))
+        .map(|line| line.split_once(' ').unwrap())
+        .map(|parts| (parts.0, parts.1.parse::<i32>().unwrap()))
         .fold(
             Position::new(),
             |pos, (instruction, amount)| match instruction {
