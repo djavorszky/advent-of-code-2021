@@ -42,9 +42,14 @@ Calculate the horizontal position and depth you would have after following the p
 
 ### ❄️ Solution
 
+Iterate over the instructions, then `fold` the vertical and horizontal values into a 2-element tuple. At the end, return their product. 
+
 
 #### 🚀 Performance
 
+```
+day02 task_1   time:   [898.89 ns 905.25 ns 911.95 ns]
+```
 
 ## 🛠️ Task 2
 
