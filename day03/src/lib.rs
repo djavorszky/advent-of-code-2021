@@ -22,13 +22,94 @@ pub fn task_1(input: &[&str]) -> usize {
     gamma * epsilon
 }
 
-#[inline]
-fn is_bit_one(input: usize, bit_loc: usize) -> bool {
-    input & (1 << bit_loc) != 0
-}
+use std::cmp::Ordering;
 
 pub fn task_2(input: &[&str]) -> usize {
-    0
+    let parsed_inputs: Vec<usize> = input
+        .iter()
+        .map(|i| usize::from_str_radix(i, 2).unwrap())
+        .collect();
+
+    let len = input[0].len();
+
+    let o2 = find_result(parsed_inputs.clone(), System::Generator, len - 1);
+    let co2 = find_result(parsed_inputs, System::Scrubber, len - 1);
+
+    o2 * co2
+}
+
+fn find_result(input: Vec<usize>, system: System, bit_position: usize) -> usize {
+    if input.is_empty() {
+        panic!("empty input");
+    }
+    let mask = get_mask(&input, bit_position);
+
+    let res: Vec<usize> = input
+        .into_iter()
+        .filter(|num| system.should_include(mask, get_bit_value(*num, bit_position)))
+        .collect();
+
+    if res.len() == 1 {
+        return res[0];
+    }
+
+    find_result(res, system, bit_position - 1)
+}
+
+fn get_mask(input: &[usize], bit_location: usize) -> Mask {
+    let sum = input.iter().fold(0, |acc, i| {
+        if is_bit_one(*i, bit_location) {
+            acc + 1
+        } else {
+            acc
+        }
+    });
+
+    let half_size = (input.len() + 1) / 2;
+
+    match sum.cmp(&half_size) {
+        Ordering::Greater => Mask::Ones,
+        Ordering::Less => Mask::Zeros,
+        Ordering::Equal => Mask::Equal,
+    }
+}
+
+#[inline]
+fn is_bit_one(input: usize, bit_loc: usize) -> bool {
+    get_bit_value(input, bit_loc) == 1
+}
+
+#[inline]
+fn get_bit_value(input: usize, bit_loc: usize) -> usize {
+    (input & (1 << bit_loc)) >> bit_loc
+}
+
+#[derive(Copy, Clone, Debug)]
+enum Mask {
+    Ones,
+    Zeros,
+    Equal,
+}
+
+#[derive(Copy, Clone)]
+enum System {
+    Scrubber,
+    Generator,
+}
+
+impl System {
+    fn should_include(&self, mask: Mask, bit: usize) -> bool {
+        match self {
+            System::Scrubber => match mask {
+                Mask::Ones | Mask::Equal => bit == 0,
+                Mask::Zeros => bit == 1,
+            },
+            System::Generator => match mask {
+                Mask::Ones | Mask::Equal => bit == 1,
+                Mask::Zeros => bit == 0,
+            },
+        }
+    }
 }
 
 #[cfg(test)]
@@ -38,11 +119,11 @@ mod tests {
     #[test]
     fn bit_one_passes() {
         vec![
-            (1, 0, true),
-            (2, 1, true),
-            (2, 0, false),
-            (3, 0, true),
-            (3, 1, true),
+            (0b1, 0, true),
+            (0b10, 1, true),
+            (0b10, 0, false),
+            (0b11, 0, true),
+            (0b11, 1, true),
         ]
         .into_iter()
         .for_each(|(input, bit_loc, expected)| {
@@ -57,6 +138,22 @@ mod tests {
     }
 
     #[test]
+    fn get_bit_value_passes() {
+        let test_data = 0b100101;
+        vec![(0, 1), (1, 0), (2, 1), (3, 0), (4, 0), (5, 1)]
+            .into_iter()
+            .for_each(|(bit_loc, expected)| {
+                assert_eq!(
+                    get_bit_value(test_data, bit_loc),
+                    expected,
+                    "input: {:b}, loc: {}",
+                    test_data,
+                    bit_loc
+                )
+            })
+    }
+
+    #[test]
     fn task_1_passes() {
         let data = vec![
             "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000",
@@ -68,8 +165,11 @@ mod tests {
 
     #[test]
     fn task_2_passes() {
-        let data = vec![];
+        let data = vec![
+            "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000",
+            "11001", "00010", "01010",
+        ];
 
-        assert_eq!(task_2(&data), 0);
+        assert_eq!(task_2(&data), 230);
     }
 }
