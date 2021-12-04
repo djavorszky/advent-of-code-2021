@@ -12,11 +12,10 @@ On each instruction update all of the boards.
 
 ```
 using Vec to store marked fields:
-day04 task_1            time:   [5.4346 us 5.4833 us 5.5388 us]
+day04 task_1            time:   [564.67 us 566.85 us 569.29 us]
 
 using HashSet to store marked fields:
-day04 task_1            time:   [11.422 us 11.449 us 11.481 us]
-
+day04 task_1            time:   [909.68 us 911.70 us 913.82 us]
 
 ```
 
@@ -32,5 +31,9 @@ Same as Task 1, but keep track if a board has already won. If it did, skip it. O
 #### 🚀 Performance
 
 ```
-day04 task_2            time:   [5.6001 us 5.6300 us 5.6607 us]
+using Vec to store marked fields
+day04 task_2            time:   [2.0388 ms 2.0446 ms 2.0508 ms]
+
+Using HashSet to store marked fields
+day04 task_2            time:   [2.2377 ms 2.2427 ms 2.2481 ms]
 ```
