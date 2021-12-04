@@ -23,12 +23,14 @@ day04 task_1            time:   [11.422 us 11.449 us 11.481 us]
 
 ## 🛠️ Task 2
 
-Explanation
+Play Bingo until the last board wins
 
 ### ❄️ Solution
 
-Solution
+Same as Task 1, but keep track if a board has already won. If it did, skip it. Otherwise go until the last board won.
 
 #### 🚀 Performance
 
-Perf
+```
+day04 task_2            time:   [5.6001 us 5.6300 us 5.6607 us]
+```
