@@ -41,11 +41,8 @@ fn run_task_2(instructions: Vec<usize>, mut boards: Vec<BingoBoard>) -> Option<u
     let boards_size = boards.len();
 
     for i in instructions {
+        boards.retain(|b| !b.won_already);
         for mut b in &mut boards {
-            if b.won_already {
-                continue;
-            }
-
             mark_field(b, i);
 
             if is_bingo(b) {

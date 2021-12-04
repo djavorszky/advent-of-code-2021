@@ -32,7 +32,7 @@ Same as Task 1, but keep track if a board has already won. If it did, skip it. O
 
 ```
 using Vec to store marked fields
-day04 task_2            time:   [2.0388 ms 2.0446 ms 2.0508 ms]
+day04 task_2            time:   [1.9051 ms 1.9097 ms 1.9145 ms]
 
 Using HashSet to store marked fields
 day04 task_2            time:   [2.2377 ms 2.2427 ms 2.2481 ms]
