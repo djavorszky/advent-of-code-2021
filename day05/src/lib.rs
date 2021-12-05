@@ -5,15 +5,11 @@ mod structs;
 use structs::{Line, LineType, Point};
 
 pub fn task_1(input: &[&str], size: usize) -> usize {
-    let lines: Vec<Line> = input
-        .into_iter()
-        .map(|line| line.parse().unwrap())
-        .collect();
-
     let mut grid = vec![0; size * size];
 
-    lines
-        .into_iter()
+    let lines = input
+        .iter()
+        .map(|line| line.parse::<Line>().unwrap())
         .filter(|l| l.line_type != LineType::Diagonal)
         .for_each(|line| {
             match line.line_type {
