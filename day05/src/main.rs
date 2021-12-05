@@ -7,5 +7,5 @@ fn main() {
     let data: Vec<&str> = input.lines().collect();
 
     println!("Task 1: {}", task_1(&data, 991));
-    println!("Task 2: {}", task_2(&data));
+    println!("Task 2: {}", task_2(&data, 991));
 }

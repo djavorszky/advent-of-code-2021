@@ -18,17 +18,20 @@ pub struct Point {
 pub enum LineType {
     Horizontal,
     Vertical,
-    Diagonal,
+    DiagonalAsc,
+    DiagonalDesc,
 }
 
 impl LineType {
     fn from(p1: &Point, p2: &Point) -> Self {
-        if (p1.x == p2.x) {
+        if p1.x == p2.x {
             Self::Vertical
-        } else if (p1.y == p2.y) {
+        } else if p1.y == p2.y {
             Self::Horizontal
+        } else if p1.x < p2.x && p1.y > p2.y {
+            Self::DiagonalAsc
         } else {
-            Self::Diagonal
+            Self::DiagonalDesc
         }
     }
 }
@@ -60,7 +63,7 @@ impl Ord for Point {
     fn cmp(&self, other: &Self) -> Ordering {
         if self.x == other.x && self.y == other.y {
             Ordering::Equal
-        } else if self.x > other.x || self.y > other.y {
+        } else if (self.x == other.x && self.y > other.y) || self.x > other.x {
             Ordering::Greater
         } else {
             Ordering::Less
@@ -154,7 +157,7 @@ mod tests {
                 Line {
                     start: Point::new(0, 0),
                     end: Point::new(8, 8),
-                    line_type: LineType::Diagonal,
+                    line_type: LineType::DiagonalDesc,
                 },
             ),
             (
@@ -162,7 +165,23 @@ mod tests {
                 Line {
                     start: Point::new(0, 0),
                     end: Point::new(8, 8),
-                    line_type: LineType::Diagonal,
+                    line_type: LineType::DiagonalDesc,
+                },
+            ),
+            (
+                "0,8 -> 8,0",
+                Line {
+                    start: Point::new(0, 8),
+                    end: Point::new(8, 0),
+                    line_type: LineType::DiagonalAsc,
+                },
+            ),
+            (
+                "8,0 -> 0,8",
+                Line {
+                    start: Point::new(0, 8),
+                    end: Point::new(8, 0),
+                    line_type: LineType::DiagonalAsc,
                 },
             ),
         ]
