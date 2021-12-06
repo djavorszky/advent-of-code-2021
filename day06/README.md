@@ -2,19 +2,21 @@
 
 ## 🛠️ Task 1
 
-Explanation be here
+Fish be reproducing after 6 days, 8 if they are just born. Given set of existing fish, how many fish would there be after 80 days?
 
 ### ❄️ Solution
 
-Solution be here
+Naive, brute-force approach - simulate every iteration by keeping track of all the fishies for each simulation. It's slow, but it gets the work done.
 
 #### 🚀 Performance
 
-Perf be here
+```
+day06 task_1            time:   [1.5374 ms 1.5422 ms 1.5479 ms]
+```
 
 ## 🛠️ Task 2
 
-Explanation
+Same as Task 1, but 256 iterations
 
 ### ❄️ Solution
 
