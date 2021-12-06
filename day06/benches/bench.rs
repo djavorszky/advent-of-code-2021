@@ -9,7 +9,7 @@ fn criterion_benchmark(c: &mut Criterion) {
         .collect();
 
     c.bench_function("day06 task_1", |b| b.iter(|| task_1(black_box(&data))));
-    // c.bench_function("day06 task_2", |b| b.iter(|| task_2(black_box(&data))));
+    c.bench_function("day06 task_2", |b| b.iter(|| task_2(black_box(&data))));
 }
 
 criterion_group!(benches, criterion_benchmark);
