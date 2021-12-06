@@ -2,14 +2,41 @@
 
 use std::collections::HashMap;
 
-pub fn task_1(input: &[u8]) -> u128 {
-    let mut data = init_map(input);
+pub fn task_1(input: &[usize]) -> u64 {
+    let mut data = init_slice(input);
 
     for _ in 0..80 {
-        simulate_map(&mut data);
+        simulate_slice(&mut data);
     }
 
-    data.values().sum::<u128>()
+    data.iter().sum::<u64>()
+}
+
+pub fn task_2(input: &[usize]) -> u64 {
+    let mut data = init_slice(input);
+
+    for _ in 0..256 {
+        simulate_slice(&mut data);
+    }
+
+    data.iter().sum::<u64>()
+}
+
+fn simulate_slice(pop: &mut [u64; 9]) {
+    let new_fish = pop[0];
+    for i in (1..=8) {
+        pop[i - 1] = pop[i];
+    }
+    pop[8] = new_fish;
+    pop[6] += new_fish;
+}
+
+fn init_slice(input: &[usize]) -> [u64; 9] {
+    let mut data = [0u64; 9];
+    for i in input.into_iter() {
+        data[*i] += 1
+    }
+    data
 }
 
 fn init_map(input: &[u8]) -> HashMap<u8, u128> {
@@ -53,16 +80,6 @@ fn simulate_vec(population: &mut Vec<Fish>) {
 
 #[derive(Debug)]
 struct Fish(u8);
-
-pub fn task_2(input: &[u8]) -> u128 {
-    let mut data = init_map(input);
-
-    for _ in 0..256 {
-        simulate_map(&mut data);
-    }
-
-    data.values().sum::<u128>()
-}
 
 #[cfg(test)]
 mod tests {

@@ -17,6 +17,8 @@ On each simulation step, move the fishies one closer to day 0. The fishes in day
 
 At the end, sum the number of fishies in the `HashMap` and return that as the result.
 
+Third: A `HashMap` with an `integer` as the key is pretty much an array. Since we only need 9 contiguous places, we can ditch the Map and use a slice instead.
+
 #### 🚀 Performance
 
 ```
@@ -25,6 +27,9 @@ day06 task_1            time:   [1.5374 ms 1.5422 ms 1.5479 ms]
 
 using HashMap:
 day06 task_1            time:   [19.582 us 19.619 us 19.660 us]
+
+using array:
+day06 task_1            time:   [276.06 ns 276.53 ns 276.99 ns]
 ```
 
 ## 🛠️ Task 2
@@ -33,10 +38,14 @@ Same as Task 1, but 256 iterations
 
 ### ❄️ Solution
 
-Brute force way runs forever, so clever way was utilized, see above.
+Brute force way runs forever, so clever way was utilized, genius way was even faster.
 
 #### 🚀 Performance
 
 ```
+Using map:
 day06 task_2            time:   [54.514 us 54.643 us 54.805 us]
+
+Using array:
+day06 task_2            time:   [305.81 ns 306.37 ns 306.99 ns]
 ```
