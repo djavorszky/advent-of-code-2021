@@ -27,25 +27,12 @@ fn init_map(input: &[u8]) -> HashMap<u8, u128> {
 }
 
 fn simulate_map(pop: &mut HashMap<u8, u128>) {
-    let day8 = pop[&8];
-    let day7 = pop[&7];
-    let day6 = pop[&6];
-    let day5 = pop[&5];
-    let day4 = pop[&4];
-    let day3 = pop[&3];
-    let day2 = pop[&2];
-    let day1 = pop[&1];
-    let day0 = pop[&0];
-
-    pop.insert(8, day0);
-    pop.insert(7, day8);
-    pop.insert(6, day7 + day0);
-    pop.insert(5, day6);
-    pop.insert(4, day5);
-    pop.insert(3, day4);
-    pop.insert(2, day3);
-    pop.insert(1, day2);
-    pop.insert(0, day1);
+    let new_fish = pop[&0];
+    for i in 1..=8 {
+        pop.insert(i - 1, pop[&i]);
+    }
+    pop.entry(6u8).and_modify(|val| *val += new_fish);
+    pop.insert(8, new_fish);
 }
 
 fn simulate_vec(population: &mut Vec<Fish>) {

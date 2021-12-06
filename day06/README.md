@@ -24,7 +24,7 @@ using brute-force vec:
 day06 task_1            time:   [1.5374 ms 1.5422 ms 1.5479 ms]
 
 using HashMap:
-day06 task_1            time:   [21.277 us 21.305 us 21.333 us]
+day06 task_1            time:   [19.582 us 19.619 us 19.660 us]
 ```
 
 ## 🛠️ Task 2
@@ -38,5 +38,5 @@ Brute force way runs forever, so clever way was utilized, see above.
 #### 🚀 Performance
 
 ```
-day06 task_2            time:   [59.186 us 59.385 us 59.682 us]
+day06 task_2            time:   [54.514 us 54.643 us 54.805 us]
 ```
