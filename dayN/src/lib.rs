@@ -14,13 +14,13 @@ mod tests {
     fn task_1_passes() {
         let data = vec![];
 
-        assert_eq!(task_1(&data), -1);
+        assert_eq!(task_1(&data), 1);
     }
 
     #[test]
     fn task_2_passes() {
         let data = vec![];
 
-        assert_eq!(task_2(&data), -1);
+        assert_eq!(task_2(&data), 1);
     }
 }

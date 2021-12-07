@@ -1,9 +1,9 @@
 use std::fs;
 
-use day02::*;
+use dayN::*;
 
 fn main() {
-    let input = fs::read_to_string("input.txt").unwrap();
+    let input = include_str!("../input.txt");
     let data: Vec<&str> = input.lines().collect();
 
     println!("Task 1: {}", task_1(&data));

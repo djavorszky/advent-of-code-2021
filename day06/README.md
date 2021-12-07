@@ -1,5 +1,3 @@
-# ☀️ Day 1
-
 ## 🛠️ Task 1
 
 Fish be reproducing after 6 days, 8 if they are just born. Given set of existing fish, how many fish would there be after 80 days?
