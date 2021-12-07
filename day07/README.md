@@ -14,12 +14,14 @@ day07 task_1            time:   [663.43 ns 665.25 ns 667.14 ns]
 
 ## 🛠️ Task 2
 
-Explanation
+Same as before, but the crab submarines use one more fuel per distance traveled.
 
 ### ❄️ Solution
 
-Solution
+Brute-force it
 
 #### 🚀 Performance
 
-Perf
+```
+day07 task_2            time:   [803.68 us 805.48 us 807.48 us]
+```

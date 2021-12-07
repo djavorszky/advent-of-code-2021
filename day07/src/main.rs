@@ -8,5 +8,11 @@ fn main() {
         .collect();
 
     println!("Task 1: {}", task_1(&mut data));
-    println!("Task 2: {}", task_2(&data));
+
+    let mut data2: Vec<i32> = input
+        .split(',')
+        .map(|v| v.parse::<i32>().unwrap())
+        .collect();
+
+    println!("Task 2: {}", task_2(&mut data2));
 }

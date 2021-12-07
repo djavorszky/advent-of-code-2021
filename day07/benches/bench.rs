@@ -10,7 +10,12 @@ fn criterion_benchmark(c: &mut Criterion) {
         .collect();
 
     c.bench_function("day07 task_1", |b| b.iter(|| task_1(black_box(&mut data))));
-    //    c.bench_function("day07 task_2", |b| b.iter(|| task_2(black_box(&data))));
+
+    let mut data: Vec<i32> = input
+        .split(',')
+        .map(|v| v.parse::<i32>().unwrap())
+        .collect();
+    c.bench_function("day07 task_2", |b| b.iter(|| task_2(black_box(&mut data))));
 }
 
 criterion_group!(benches, criterion_benchmark);
