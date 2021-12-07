@@ -33,7 +33,7 @@ fn simulate_slice(pop: &mut [u64; 9]) {
 
 fn init_slice(input: &[usize]) -> [u64; 9] {
     let mut data = [0u64; 9];
-    for i in input.into_iter() {
+    for i in input.iter() {
         data[*i] += 1
     }
     data

@@ -1,5 +1,3 @@
-use std::fs;
-
 use dayN::*;
 
 fn main() {
