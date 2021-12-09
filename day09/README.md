@@ -14,12 +14,14 @@ day09 task_1            time:   [172.66 us 176.93 us 181.45 us]
 
 ## 🛠️ Task 2
 
-Explanation
+Get the basin sizes
 
 ### ❄️ Solution
 
-Solution
+Recursive function that walks through the basin. Uses a `HashSet` to keep track of which indexes it has already seen.
 
 #### 🚀 Performance
 
-Perf
+```
+day09 task_2            time:   [933.36 us 939.39 us 945.88 us]
+```

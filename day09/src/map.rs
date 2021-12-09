@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 pub struct Map {
     pub levels: Vec<u32>,
     width: usize,
@@ -11,16 +13,27 @@ pub enum Direction {
     West,
 }
 
+pub const ALL_DIRECTIONS: [Direction; 4] = [
+    Direction::North,
+    Direction::East,
+    Direction::South,
+    Direction::West,
+];
+
 impl Map {
-    pub fn neighbour(&self, index: usize, d: Direction) -> Option<u32> {
+    pub fn neighbour_val(&self, index: usize, d: Direction) -> Option<u32> {
+        self.neighbour(index, d).map(|v| v.1)
+    }
+
+    fn neighbour(&self, index: usize, d: Direction) -> Option<(usize, u32)> {
         if !self.has_neighbour(index, d) {
             return None;
         }
         match d {
-            Direction::North => Some(self.levels[index - self.width]),
-            Direction::East => Some(self.levels[index + 1]),
-            Direction::South => Some(self.levels[index + self.width]),
-            Direction::West => Some(self.levels[index - 1]),
+            Direction::North => Some((index - self.width, self.levels[index - self.width])),
+            Direction::East => Some((index + 1, self.levels[index + 1])),
+            Direction::South => Some((index + self.width, self.levels[index + self.width])),
+            Direction::West => Some((index - 1, self.levels[index - 1])),
         }
     }
 
@@ -31,6 +44,30 @@ impl Map {
             Direction::South => index < self.levels.len() - self.width,
             Direction::West => index % self.width != 0,
         }
+    }
+
+    pub fn get_basin_size(&self, start_idx: usize) -> usize {
+        let mut seen = HashSet::with_capacity(100);
+
+        self.walk_basin(start_idx, &mut seen)
+    }
+
+    fn walk_basin(&self, current_idx: usize, seen: &mut HashSet<usize>) -> usize {
+        if seen.contains(&current_idx) {
+            return 0;
+        }
+
+        seen.insert(current_idx);
+
+        ALL_DIRECTIONS.iter().fold(1, |acc, direction| {
+            let result = match self.neighbour(current_idx, *direction) {
+                None => 0,
+                Some((idx, value)) if value == 9 || seen.contains(&idx) => 0,
+                Some((idx, _)) => self.walk_basin(idx, seen),
+            };
+
+            acc + result
+        })
     }
 }
 
@@ -120,29 +157,48 @@ mod tests {
         .into_iter()
         .for_each(|(idx, north, east, south, west)| {
             assert_eq!(
-                map.neighbour(idx, Direction::North),
+                map.neighbour_val(idx, Direction::North),
                 north,
                 "idx: {}, dir: north",
                 idx
             );
             assert_eq!(
-                map.neighbour(idx, Direction::East),
+                map.neighbour_val(idx, Direction::East),
                 east,
                 "idx: {}, dir: east",
                 idx
             );
             assert_eq!(
-                map.neighbour(idx, Direction::South),
+                map.neighbour_val(idx, Direction::South),
                 south,
                 "idx: {}, dir: south",
                 idx
             );
             assert_eq!(
-                map.neighbour(idx, Direction::West),
+                map.neighbour_val(idx, Direction::West),
                 west,
                 "idx: {}, dir: west",
                 idx
             );
         });
+    }
+
+    #[test]
+    fn test_get_basin_size() {
+        let input = include_str!("test_input.txt");
+        let map: Map = input.lines().collect::<Vec<&str>>().into();
+
+        [(0, 3), (9, 9), (22, 14), (46, 9)]
+            .into_iter()
+            .for_each(|(start_idx, expected)| {
+                assert_eq!(
+                    map.get_basin_size(start_idx),
+                    expected,
+                    "idx: {}",
+                    start_idx
+                );
+
+                println!("=====");
+            })
     }
 }
