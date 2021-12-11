@@ -197,8 +197,6 @@ mod tests {
                     "idx: {}",
                     start_idx
                 );
-
-                println!("=====");
             })
     }
 }
