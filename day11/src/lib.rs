@@ -1,6 +1,13 @@
 type Consortium = [u32; 100];
-type Flashed = [bool; 100];
+type Flashed = [State; 100];
 type Direction = (i32, i32);
+
+#[derive(Copy, Clone, PartialEq)]
+enum State {
+    Flashed,
+    NeedIncrease,
+    Normal,
+}
 
 const ALL_DIRECTIONS: [Direction; 8] = [
     (-1, -1),
@@ -26,34 +33,38 @@ pub fn task_1(input: &str) -> usize {
 
 fn step(c: &mut Consortium) -> usize {
     fn calc_flashes(c: &mut Consortium, f: &mut Flashed) -> usize {
-        let flashing = c
+        let need_flash = c
             .iter()
             .enumerate()
-            .filter(|(idx, _)| !f[*idx] && c[*idx] > 9)
+            .filter(|(idx, _)| f[*idx] == State::Normal && c[*idx] > 9)
             .count();
 
-        if flashing == 0 {
+        if need_flash == 0 {
             return 0;
         }
 
         do_flash(c, f);
 
-        flashing + calc_flashes(c, f)
+        need_flash + calc_flashes(c, f)
     }
 
-    #[allow(clippy::needless_collect)]
     fn do_flash(c: &mut Consortium, f: &mut Flashed) {
-        let need_to_flash: Vec<usize> = c
-            .iter()
+        for (_, state) in f
+            .iter_mut()
             .enumerate()
-            .filter(|(idx, _)| !f[*idx] && c[*idx] > 9)
-            .map(|(idx, _)| idx)
-            .collect();
+            .filter(|(idx, state)| *state == &State::Normal && c[*idx] > 9)
+        {
+            *state = State::NeedIncrease;
+        }
 
-        need_to_flash.into_iter().for_each(|idx| {
-            f[idx] = true;
+        for (idx, state) in f
+            .iter_mut()
+            .enumerate()
+            .filter(|(_, state)| *state == &State::NeedIncrease)
+        {
             increase_neighbours(c, idx);
-        });
+            *state = State::Flashed;
+        }
     }
 
     fn increase_neighbours(c: &mut Consortium, idx: usize) {
@@ -63,7 +74,7 @@ fn step(c: &mut Consortium) -> usize {
             .for_each(|idx| c[idx] += 1);
     }
 
-    let mut flashes = [false; 100];
+    let mut flashes = [State::Normal; 100];
     (0..100).for_each(|idx| c[idx] += 1);
 
     let flash_count = calc_flashes(c, &mut flashes);
