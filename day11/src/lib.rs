@@ -59,19 +59,15 @@ fn step(c: &mut Consortium) -> usize {
         ALL_DIRECTIONS
             .iter()
             .filter_map(|dir| get_idx(idx as i32, dir))
-            .for_each(|idx| c[idx] = c[idx] + 1);
+            .for_each(|idx| c[idx] += 1);
     }
 
     let mut flashes = [false; 100];
-    (0..100).for_each(|idx| c[idx] = c[idx] + 1);
+    (0..100).for_each(|idx| c[idx] += 1);
 
     let flash_count = calc_flashes(c, &mut flashes);
 
-    for i in 0..100 {
-        if c[i] > 9 {
-            c[i] = 0
-        }
-    }
+    c.iter_mut().filter(|o| **o > 9).for_each(|o| *o = 0);
 
     flash_count
 }
