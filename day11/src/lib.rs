@@ -41,6 +41,7 @@ fn step(c: &mut Consortium) -> usize {
         flashing + calc_flashes(c, f)
     }
 
+    #[allow(clippy::needless_collect)]
     fn do_flash(c: &mut Consortium, f: &mut Flashed) {
         let need_to_flash: Vec<usize> = c
             .iter()
