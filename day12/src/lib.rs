@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 pub fn task_1(input: &[&str]) -> usize {
     let mut connections: HashMap<&str, Vec<&str>> = HashMap::with_capacity(10);
@@ -18,42 +18,60 @@ pub fn task_1(input: &[&str]) -> usize {
                 .or_insert_with(|| vec![c1]);
         });
 
-    explore_map(&connections)
+    explore_map(&connections, 1)
 }
 
-fn explore_map(c: &HashMap<&str, Vec<&str>>) -> usize {
+fn explore_map(c: &HashMap<&str, Vec<&str>>, max_size: usize) -> usize {
     fn visit_cave<'a>(
         current: &'a str,
-        seen: &mut HashSet<&'a str>,
+        seen: &mut HashMap<&'a str, usize>,
         c: &HashMap<&'a str, Vec<&'a str>>,
+        max_size: usize,
     ) -> usize {
         if current == "end" {
             return 1;
         }
 
-        if seen.contains(current) {
+        if seen.get(current).map(|v| *v == max_size).unwrap_or(false) {
             return 0;
         }
 
         if current.to_ascii_lowercase() == current {
-            seen.insert(current);
+            seen.entry(current).and_modify(|v| *v += 1).or_insert(1);
         }
 
         let result = c[current]
             .iter()
             .filter(|cave| **cave != "start")
-            .fold(0, |acc, next| acc + visit_cave(next, seen, c));
+            .fold(0, |acc, next| acc + visit_cave(next, seen, c, max_size));
 
         seen.remove(current);
 
         result
     }
 
-    visit_cave("start", &mut HashSet::new(), &c)
+    visit_cave("start", &mut HashMap::with_capacity(10), &c, max_size)
 }
 
-pub fn task_2(_input: &[&str]) -> usize {
-    0
+pub fn task_2(input: &[&str]) -> usize {
+    let mut connections: HashMap<&str, Vec<&str>> = HashMap::with_capacity(10);
+
+    input
+        .iter()
+        .map(|line| line.split_once('-').unwrap())
+        .for_each(|(c1, c2)| {
+            connections
+                .entry(c1)
+                .and_modify(|v| v.push(c2))
+                .or_insert_with(|| vec![c2]);
+
+            connections
+                .entry(c2)
+                .and_modify(|v| v.push(c1))
+                .or_insert_with(|| vec![c1]);
+        });
+
+    explore_map(&connections, 2)
 }
 
 #[cfg(test)]
